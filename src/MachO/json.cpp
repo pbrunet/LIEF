@@ -472,6 +472,17 @@ void JsonVisitor::visit(const EncryptionInfo& e) {
 }
 
 
+void JsonVisitor::visit(const BuildVersion& e) {
+  this->visit(*e.as<LoadCommand>());
+  // TODO
+}
+
+
+void JsonVisitor::visit(const BuildToolVersion& e) {
+  // TODO
+}
+
+
 
 
 } // namespace MachO

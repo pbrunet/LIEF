@@ -295,6 +295,15 @@ void Hash::visit(const EncryptionInfo& e) {
   this->process(e.crypt_id());
 }
 
+void Hash::visit(const BuildVersion& e) {
+  this->visit(*e.as<LoadCommand>());
+  //TODO
+}
+
+void Hash::visit(const BuildToolVersion& e) {
+  //TODO
+}
+
 
 
 

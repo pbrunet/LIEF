@@ -672,6 +672,17 @@ def print_functions(binary):
     for idx, f in enumerate(binary.functions):
         print("    [{:d}] {}: 0x{:x}".format(idx, f.name, f.address))
 
+@exceptions_handler(Exception)
+def print_build_version(binary):
+    print("== Build Version ==\n")
+
+    build_version = binary.build_version
+    print("Platform: {}".format(str(build_version.platform).split(".")[-1]))
+    print("Min OS: {:d}.{:d}.{:d}".format(*build_version.minos))
+    print("SDK: {:d}.{:d}.{:d}".format(*build_version.sdk))
+
+
+
 
 
 def main():
@@ -808,6 +819,10 @@ def main():
             action='store_true', dest='show_functions',
             help='All functions found in the binary')
 
+    parser.add_argument('--build-version',
+            action='store_true', dest='show_build_version',
+            help='Show build version')
+
     parser.add_argument("binary",
             metavar="<macho-file>",
             help='Target Mach-O File')
@@ -923,6 +938,9 @@ def main():
 
         if args.show_functions or args.show_all:
             print_functions(binary)
+
+        if (args.show_build_version or args.show_all) and binary.has_build_version:
+            print_build_version(binary)
 
     sys.exit(EXIT_STATUS)
 
